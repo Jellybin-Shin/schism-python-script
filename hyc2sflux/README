@@ -1,0 +1,17 @@
+# These below scripts is for generating Hotstart input of SCHISM
+# from HYCOM data.
+#
+# The Hycom data is need to be located in ../HYCOM_DATA, with the 
+# name of the file like TS_1.nc, SSH_1.nc, UV_1.nc
+# 
+# When you make the input files, only 4 scripts are used.
+#
+# - auto.pl
+#
+# - gen_hot_3Dth_from_hycom.f90
+# - gen_hot_3Dth_from_nc.in
+# - gen_gr3.pl
+# 
+# To copile gen_hot_3Dth_from_hycom.f90, check comment in
+# the scripts file.
+# 
