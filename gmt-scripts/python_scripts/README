@@ -1,0 +1,9 @@
+These python scripts convert schout_*.nc to gmt format.
+
+sch2xyv.py:
+	Extracting xyv data specific horizontal section.
+	outputs.xyv with header=[x, y, variable]
+
+sch2vsection.py:
+  Extracting vertical section data
+  outputs.xzv with header=[x(or y), z, variable
