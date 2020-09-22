@@ -23,7 +23,7 @@ cd $work_dir/gmt_outputs
 cp -a $scrt_dir/gmt-scripts ./
 ls ./gmt-scripts/python_scripts
 
-sh ./gmt-scripts/01.ssh-gmt-test.sh
+sh ./gmt-scripts/00.run_gmt.sh
 
 rm -rf ./gmt-scripts
 conda deactivate
