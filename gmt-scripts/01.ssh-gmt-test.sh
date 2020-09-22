@@ -20,7 +20,7 @@ do
   python ./gmt-scripts/python_scripts/sch2xyv.py ../outputs ./  $var $tt -1  
   filename=${var}_t-${tt}_vl--1
   gmt begin ${var_nic}_t-${tt}
-    gmt nearneighbor -R${window_x_min}/${window_x_max}/${window_y_min}/${window_y_max} -I0.05m -S1.5k -G$filename.nc $filename.xyv
+    gmt nearneighbor -R${window_x_min}/${window_x_max}/${window_y_min}/${window_y_max} -I0.025m -S1.5k -G$filename.nc $filename.xyv
   	gmt grdimage $filename.nc -JM6i -Cseafloor -B
     gmt grdcontour $filename.nc -JM6i -C$v_interval -A0.06 -B
     gmt colorbar -DJRM+o1.5c/0+e+mc -By+0.0lm

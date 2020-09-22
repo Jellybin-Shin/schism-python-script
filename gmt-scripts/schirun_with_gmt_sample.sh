@@ -8,7 +8,7 @@
   #for work_dir in '/home/dbshin/01_WORKS/2020/tongyeong/14_sigma_elevbc_tide_tvd2_sflux_itur_off_itur_3KEKC/' 
   #do
   #done
-scrt_dir='/home/dbshin/01_WORKS/98_schism-scripts/'
+scrt_dir='/home/dbshin/01_WORKS/git/schism-related-script'
 work_dir='/home/dbshin/01_WORKS/2020/tongyeong/14_sigma_elevbc_tide_tvd2_sflux_itur_off_itur_3KEKC/'
 source ~/anaconda3/etc/profile.d/conda.sh
 
@@ -21,6 +21,7 @@ conda activate gmt_env
 echo `which python`
 cd $work_dir/gmt_outputs
 cp -a $scrt_dir/gmt-scripts ./
+ls ./gmt-scripts/python_scripts
 
 sh ./gmt-scripts/01.ssh-gmt-test.sh
 
@@ -30,7 +31,6 @@ conda deactivate
 exit
 
 #=============================================================================
-Version up
 
 # 1. Model Run ----------------------------------------#
 export NNODE=`wc $PBS_NODEFILE|awk '{print $1}'`
