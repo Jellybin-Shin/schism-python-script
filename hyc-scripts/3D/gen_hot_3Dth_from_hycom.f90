@@ -520,7 +520,7 @@
         enddo !i
 
 !       Get rest of varid's
-        status = nf90_inq_varid(sid, "temperature", tvid)
+        status = nf90_inq_varid(sid, "water_temp", tvid)
         status = nf90_inq_varid(ncids(1), "surf_el", evid)
         status = nf90_inq_varid(ncids(2), "water_u", uvid)
         status = nf90_inq_varid(ncids(2), "water_v", vvid)

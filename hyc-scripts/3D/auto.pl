@@ -15,24 +15,26 @@ print("Make sure you have netcdf libraries\n");
 #}
 
 #dirs
-$hycom_dir="../HYCOM_DATA";
+$hycom_dir="/home/Work2/home/dbshin/99_EXT_DATAS/HYCOM_DATA";
 
 $thisdir=cwd();
 
 #UTM grid
-system("ln -sf ../hgrid.* .");
-system("ln -sf ../vgrid.in .");
+system("ln -sf ../../../hgrid.* .");
+system("ln -sf ../../../vgrid.in .");
 system("ln -sf $hycom_dir/*.nc .");
 
 
 system("./gen_gr3.pl");
 
 #generate hotstart.nc and *D.th.nc
-system("./gen_hot_3Dth_from_hycom");
+system("./gen_hot_3Dth_from_hycom.exe");
+
+
+system("cp *D.th.nc ../../../");
+system("cp hotstart.nc ../../../");
 
 unlink("../*D.th.nc");
 unlink("./hotstart.nc");
-
-copy("*D.th.nc","../");
 
 print(" Done.\n")

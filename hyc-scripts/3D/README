@@ -4,8 +4,10 @@
 # The Hycom data is need to be located in ../HYCOM_DATA, with the 
 # name of the file like TS_1.nc, SSH_1.nc, UV_1.nc
 # 
-# When you make the input files, only 4 scripts are used.
-#
+# When you make the input files, Use 5 scripts below.
+# and "extract_bc_from_hycom_sample.sh" is main scripts
+# and need to modify gen_hot_3Dth_from_nc.in
+# 
 # - auto.pl
 #
 # - gen_hot_3Dth_from_hycom.f90
