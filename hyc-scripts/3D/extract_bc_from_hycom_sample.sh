@@ -10,7 +10,8 @@
   #done
 scrt_dir='/home/dbshin/01_WORKS/git/schism-related-script'
 #work_dir='/home/dbshin/01_WORKS/2020/tongyeong/14_sigma_elevbc_tide_tvd2_sflux_itur_off_itur_3KEKC/'
-work_dir='/home/Work2/home/dbshin/2020/eastsea/00_modelsetting/00_SET/'
+#work_dir='/home/Work2/home/dbshin/2020/eastsea/00_modelsetting/00_SET/'
+work_dir='/home/Work2/home/dbshin/2020/eastsea/02_openbc1/'
 rm -rf $work_dir/hyc-bc
 mkdir $work_dir/hyc-bc
 
