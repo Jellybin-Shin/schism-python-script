@@ -10,6 +10,9 @@ working_dir = sys.argv[1]
 [lon_min, lon_max] = [ float(sys.argv[4]), float(sys.argv[5]) ]
 lonlat_degree = float(sys.argv[6])
 time_step = float(sys.argv[7])
+sta_year = int(sys.argv[8])
+sta_month= int(sys.argv[9])
+sta_day  = int(sys.argv[10])
 
 # Create lon / lat array
 print('==========================')
@@ -31,14 +34,16 @@ print('==========================')
 
 files = glob.glob('{}/*grib2*'.format(working_dir))
 
-ncout = nc4.Dataset('sflux_air_1.0001.nc','w', format='NETCDF4') #'w' stands for write
+
+ncout = nc4.Dataset('{}/sflux_air_1.0001.nc'.format(working_dir),'w', format='NETCDF4') #'w' stands for write
 ncout.createDimension('time', None)
 ncout.createDimension('nx_grid', len(lon))
 ncout.createDimension('ny_grid', len(lat))
 
 time_nc  = ncout.createVariable('time',  'f4','time')
 time_nc.long_name = "Time"; time_nc.standard_name = "time" 
-time_nc.units = "days since 2020-06-10"; time_nc.base_date = [2020, 6, 10, 0]
+time_nc.units = "days since {0}-{1}-{2}".format(sta_year, sta_month, sta_day);
+time_nc.base_date = [sta_year, sta_month, sta_day, 0]
 lon_nc   = ncout.createVariable('lon',   'f4',('ny_grid','nx_grid'))
 lon_nc.long_name = "Longitude" 
 lon_nc.standard_name = "longitude" 
@@ -79,7 +84,10 @@ for i, grib_dir in enumerate(files):
     grb_spfh  = gribfile.GetRasterBand(3) # SPFH:2 m above ground:anl:
     grb_uwind = gribfile.GetRasterBand(4) # uwind:10 m above ground:anl:
     grb_vwind = gribfile.GetRasterBand(5) # vwind:10 m above ground:anl:
-    grb_prmsl = gribfile.GetRasterBand(6) # prmsl:msl:anl:
+    if (i%2)==0 :
+        grb_prmsl = gribfile.GetRasterBand(7) # prmsl:msl:anl:
+    else :
+        grb_prmsl = gribfile.GetRasterBand(10) # prmsl:msl:anl:
     
     time_nc[i] = i*time_step/24 # hours from start time
     stmp_nc[i,:,:] = list(reversed(list(grb_stmp.ReadAsArray()+273.15)))
