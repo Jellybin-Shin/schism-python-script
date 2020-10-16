@@ -8,12 +8,14 @@
 # and "extract_bc_from_hycom_sample.sh" is main scripts
 # and need to modify gen_hot_3Dth_from_nc.in
 # 
+# - extract_bc_from_hycom_sample.sh
+#   > Just run this script after revising working directory in 
+#     this script
 # - auto.pl
-#
 # - gen_hot_3Dth_from_hycom.f90
 # - gen_hot_3Dth_from_nc.in
 # - gen_gr3.pl
-# 
+#
 # To copile gen_hot_3Dth_from_hycom.f90, check comment in
 # the scripts file.
 # 

@@ -11,7 +11,12 @@
 scrt_dir='/home/dbshin/01_WORKS/git/schism-related-script'
 #work_dir='/home/dbshin/01_WORKS/2020/tongyeong/14_sigma_elevbc_tide_tvd2_sflux_itur_off_itur_3KEKC/'
 #work_dir='/home/Work2/home/dbshin/2020/eastsea/00_modelsetting/00_SET/'
-work_dir='/home/Work2/home/dbshin/2020/eastsea/02_openbc1/'
+#work_dir='/home/Work2/home/dbshin/2020/eastsea/02_openbc1/'
+#work_dir='/home/dbshin/01_WORKS/2020/eastsea/03_openbc'
+#work_dir='/home/dbshin/01_WORKS/2020/eastsea/02_fine/01_bc'
+#work_dir='/home/dbshin/01_WORKS/2020/eastsea/201_fine/402_hourly-air_tide8_bchycom_ihorcon1'
+work_dir='/home/dbshin/01_WORKS/2020/eastsea/202_fine/101_hourly-air_tide8_bchycom_ihorcon2_z-vgrid'
+
 rm -rf $work_dir/hyc-bc
 mkdir $work_dir/hyc-bc
 

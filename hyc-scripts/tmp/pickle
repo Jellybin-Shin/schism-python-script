@@ -1,0 +1,29 @@
+import numpy as np
+import pandas as pd
+import glob, pickle, sys, os
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+
+workdir = sys.argv[1]
+
+os.makedirs(workdir+'/grid', exist_ok=True)
+
+if not os.path.exists('{}/grid/east9k.pickle'.format(workdir)):
+    
+    fig, ax = plt.subplots(figsize=(10,10), dpi=200, facecolor='w')
+    
+    m = Basemap(projection='cyl', \
+                resolution='h', \
+                llcrnrlon=sta_lon, \
+                urcrnrlon=end_lon, \
+                llcrnrlat=sta_lat, \
+                urcrnrlat=end_lat)
+    m.drawcoastlines(linewidth=0.2)
+    m.fillcontinents(color='white')
+    
+    m.drawparallels(np.arange(round(sta_lat), round(end_lat+.5), 2), labels=[1,0,0,0], color='grey',
+                            dashes=(None,None), linewidth=0.2, fontsize=7)
+    m.drawmeridians(np.arange(round(sta_lon), round(end_lon+.5), 2), labels=[0,0,0,1], color='grey', 
+                            dashes=(None,None), linewidth=0.2, fontsize=7)
+
+    pickle.dump(m, open('%s/grid/east9k.pickle'%(root_path),'wb'),-1)
