@@ -7,6 +7,7 @@ This script needs :
 ## LIBRARIES AND LAUNCH VISIT ##
 import sys, os, numpy as np
 visit_dir = "/home/dbshin/99_libraries/visit" 
+# visit_dir = "/home/dbshin/03_utility/visit2.10.2"  server80
 sys.path.append("{}/2.10.2/linux-x86_64/lib/site-packages".format(visit_dir))
 
 from visit import *
