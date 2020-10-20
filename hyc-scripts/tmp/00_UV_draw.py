@@ -39,11 +39,16 @@ def read_UV(work_dir,nc_dataset,stride):
     
     print('\n# num of vertical Layer  = {} '.format(len(depth)))
     print('\n# num of time step       = {} '.format(len(time)))
+    levels = np.arange(0,1.1,0.1)
     for ti, tt in enumerate(time) :
-        for di, dd in enumerate(depth) :
+        for di, dd in enumerate(depth[:20]) :
             print(np.nanmax(uf[ti,di,:,:]))
             print(np.nanmin(uf[ti,di,:,:]))
             fig, ax = plt.subplots(figsize=(10,10), dpi=300, facecolor='w')
+            cntr = ax.contourf(LON[::stride,::stride],LAT[::stride,::stride],(uf[ti,di,::stride,::stride]**2+vf[ti,di,::stride,::stride]**2)**0.5,levels, cmap=plt.cm.jet)
+            cntr.cmap.set_under('k')
+            plt.colorbar(cntr, ax=ax)
+            # plt.clim(0, 1)
             m = ax.quiver(LON[::stride,::stride],LAT[::stride,::stride],uf[ti,di,::stride,::stride],vf[ti,di,::stride,::stride],angles='xy', scale_units='xy',scale=1, width=0.001,headwidth=5)
             qk = ax.quiverkey(m, 0.3, 0.7, 1, '1 m/s', coordinates='figure')
             print('saving.... t={}_d={}.png'.format(tt,str(dd).zfill(6)))
@@ -60,7 +65,7 @@ if __name__ == "__main__" :
     file_list = read_file_list(work_dir)
     for ii in range(0,1):
         nc_dataset = nc4.Dataset(file_list[ii],"r",format="netcdf4")
-        stride = 5
+        stride = 2
         read_UV(work_dir,nc_dataset, stride)
 
 

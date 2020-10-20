@@ -19,7 +19,7 @@ elev.max, elev.maxFlag = 1.0, 1
 
 wvelm = PseudocolorAttributes()
 wvelm.min, wvelm.minFlag = 0.0, 1
-wvelm.max, wvelm.maxFlag = 0.5, 1
+wvelm.max, wvelm.maxFlag = 12, 1
 
 zs = SliceAttributes()
 zs.originType = zs.Point
@@ -30,10 +30,10 @@ zs.axisType = zs.ZAxis
 
 wvel = VectorAttributes()
 wvel.min, wvel.minFlag = 0.0, 1
-wvel.max, wvel.maxFlag = 0.5, 1
+wvel.max, wvel.maxFlag = 12, 1
 wvel.colorByMag = 0
 wvel.scaleByMagnitude = 1
-wvel.scale = 0.25
+wvel.scale = 0.1
 wvel.useStride = 1
 wvel.stride = 1
 

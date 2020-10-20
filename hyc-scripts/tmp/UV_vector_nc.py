@@ -28,7 +28,7 @@ if len(file_list) != 0 :
     print('Reading Files List')
 else : raise Exception('There is no UV file in working directory')
 
-toexclude = ["TO_REMOVE"]
+toexclude = ["water_u","water_v"]
 for ii in range(0,1):
     with nc4.Dataset(file_list[ii]) as src, nc4.Dataset('{}/outputs/{}.vec.nc'.format(work_dir,file_list[ii].split(sep='/',)[-1]), "w") as dst:
         # copy attributes
@@ -43,6 +43,22 @@ for ii in range(0,1):
             if name not in toexclude:
                 x = dst.createVariable(name, variable.datatype, variable.dimensions)
                 dst.variables[name][:] = src.variables[name][:]
+        uu = src.variables['water_u']
+        vv = src.variables['water_v']
+        dst.createDimension('two', 2)
+        UV = dst.createVariable('UV','f4',('time','depth','lat','lon','two'))
+        UV.long_name = "uv vector" 
+        UV.standard_name = "uv vector" 
+        UV.units = "m/s" 
+        # print(np.shape(uu[:]))
+
+        # print(np.shape(UV[:,:,:,:,0]))
+
+        # UV._FillValue = uu._FillValue
+        UV[:,:,:,:,0]=uu[:]
+        UV[:,:,:,:,1]=vv[:]
+
+
             
 # for ii in range(0,1):
 #     # Open the UV_*.nc file
@@ -59,7 +75,7 @@ for ii in range(0,1):
 #             x = ncout.createVariable(name, variable.datatype, variable.dimensions)
 #             ncout[name][:] = ncori[name][:]
 #             ncout[name].setncatts(ncori[name].__dict__)
-ncout.close()
+# ncout.close()
     # # Reading variables
     # depthi = ncori.variables['depth']
     # time = ncori.variables['time']
