@@ -9,7 +9,9 @@
   #do
   #done
 scrt_dir='/home/dbshin/01_WORKS/git/schism-related-script'
-work_dir='/home/Work2/home/dbshin/2020/eastsea/303_finergrid/101_hourlyERA_tideX_hycomBC_dt300/'
+#work_dir='/home/Work2/home/dbshin/2020/eastsea/303_finergrid/101_hourlyERA_tideX_hycomBC_dt300/'
+work_dir='/home/dbshin/01_WORKS/2020/eastsea/401_EastOnly/101_1'
+
 rm -rf $work_dir/hyc-bc
 mkdir $work_dir/hyc-bc
 
@@ -24,4 +26,4 @@ cd ./hyc-scripts/3D
 perl ./auto.pl	
 
 cd ../../../
-rm -rf ./hyc-bc
+#rm -rf ./hyc-bc

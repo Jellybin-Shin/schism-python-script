@@ -15,7 +15,7 @@ print("Make sure you have netcdf libraries\n");
 #}
 
 #dirs
-$hycom_dir="/home/Work2/home/dbshin/99_EXT_DATAS/HYCOM_DATA";
+$hycom_dir="/home/Work2/home/dbshin/99_EXT_DATAS/HYCOM_DATA/20200922";
 
 $thisdir=cwd();
 
