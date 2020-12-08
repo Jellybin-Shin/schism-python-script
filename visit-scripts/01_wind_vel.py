@@ -6,8 +6,7 @@ This script needs :
 '''
 ## LIBRARIES AND LAUNCH VISIT ##
 import sys, os, numpy as np
-visit_dir = "/home/dbshin/99_libraries/visit" 
-# visit_dir = "/home/dbshin/03_utility/visit2.10.2"  server80
+visit_dir = "/home/dbshin/03_utility/visit2.10.2" 
 sys.path.append("{}/2.10.2/linux-x86_64/lib/site-packages".format(visit_dir))
 
 from visit import *
@@ -19,7 +18,7 @@ elev.max, elev.maxFlag = 1.0, 1
 
 wvelm = PseudocolorAttributes()
 wvelm.min, wvelm.minFlag = 0.0, 1
-wvelm.max, wvelm.maxFlag = 12, 1
+wvelm.max, wvelm.maxFlag = 12., 1
 
 zs = SliceAttributes()
 zs.originType = zs.Point
@@ -30,10 +29,10 @@ zs.axisType = zs.ZAxis
 
 wvel = VectorAttributes()
 wvel.min, wvel.minFlag = 0.0, 1
-wvel.max, wvel.maxFlag = 12, 1
+wvel.max, wvel.maxFlag = 12., 1
 wvel.colorByMag = 0
-wvel.scaleByMagnitude = 1
-wvel.scale = 0.1
+wvel.scaleByMagnitude = 0
+wvel.scale = 0.05
 wvel.useStride = 1
 wvel.stride = 1
 
@@ -60,7 +59,7 @@ SetOperatorOptions(zs)
 DrawPlots()
 
 # Step 4: Animate through time and asve images
-tstride = 11
+tstride = 2
 time   = np.arange(1,TimeSliderGetNStates(),tstride)
 SetSaveWindowAttributes(save)
 for state in time:

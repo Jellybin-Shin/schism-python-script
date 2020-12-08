@@ -37,25 +37,20 @@ hvel.useStride = 1
 hvel.stride = 10
 
 save = SaveWindowAttributes()
-save.fileName = "vector"
+save.fileName = "temp_surface"
 save.width, save.height = 1024,768
 save.screenCapture = 0
 
 # ============================= #
 
-for ii in np.arange(1,25):
+for ii in np.arange(1,182,5):
   # Step 1: Open a database
   #OpenDatabase("../schout_*.nc database")
   OpenDatabase("../schout_{}.nc".format(ii))
 
   # Step 2: Add plots
-  AddPlot("Pseudocolor", "hvel_surface_magnitude")
-  SetPlotOptions(hvelm)
-  # AddOperator("Slice")
-  # SetOperatorOptions(zs)
-
-  AddPlot("Vector", "hvel_surface")
-  SetPlotOptions(hvel)
+  AddPlot("Pseudocolor", "temp_surface")
+  # SetPlotOptions(elev)
   # AddOperator("Slice")
   # SetOperatorOptions(zs)
 
@@ -72,6 +67,6 @@ for ii in np.arange(1,25):
   #   DeleteActivePlots()
   #   DeleteActivePlots()
   SetTimeSliderState(0)
+  SetSaveWindowAttributes(save)
   SaveWindow()
-  DeleteActivePlots()
   DeleteActivePlots()

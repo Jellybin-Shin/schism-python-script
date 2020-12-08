@@ -22,9 +22,9 @@ hvelm.max, hvelm.maxFlag = 1.25, 1
 
 zs = SliceAttributes()
 zs.originType = zs.Point
-zs.originPoint = (0,0,-5)
-zs.normal = (0,0,1)
-zs.axisType = zs.ZAxis
+zs.originPoint = (700000, 4000000, 0)
+zs.axisType = zs.Arbitrary  # XAxis, YAxis, ZAxis, Arbitrary, ThetaPhi
+upAxis = (2, -1, 0)
 
 
 hvel = VectorAttributes()
@@ -36,6 +36,9 @@ hvel.colorByMag = 0
 hvel.useStride = 1
 hvel.stride = 10
 
+temp = PseudocolorAttributes()
+temp.min, temp.minFlag = 0.0,1 
+
 save = SaveWindowAttributes()
 save.fileName = "vector"
 save.width, save.height = 1024,768
@@ -43,25 +46,22 @@ save.screenCapture = 0
 
 # ============================= #
 
-for ii in np.arange(1,25):
+for ii in np.arange(1,2):#182,5):
   # Step 1: Open a database
   #OpenDatabase("../schout_*.nc database")
   OpenDatabase("../schout_{}.nc".format(ii))
 
   # Step 2: Add plots
-  AddPlot("Pseudocolor", "hvel_surface_magnitude")
-  SetPlotOptions(hvelm)
-  # AddOperator("Slice")
-  # SetOperatorOptions(zs)
+  AddPlot("Pseudocolor", "temp")
+  SetPlotOptions(temp)
+  AddOperator("Slice")
+  SetOperatorOptions(zs)
 
-  AddPlot("Vector", "hvel_surface")
-  SetPlotOptions(hvel)
   # AddOperator("Slice")
   # SetOperatorOptions(zs)
 
   # Step 3: Draw the plots
   DrawPlots()
-  v = GetView2D()
 
   # Step 4: Set time
   # SetSaveWindowAttributes(save)
@@ -73,5 +73,4 @@ for ii in np.arange(1,25):
   #   DeleteActivePlots()
   SetTimeSliderState(0)
   SaveWindow()
-  DeleteActivePlots()
   DeleteActivePlots()
