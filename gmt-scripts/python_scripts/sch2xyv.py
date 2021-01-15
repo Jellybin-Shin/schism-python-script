@@ -17,6 +17,8 @@
 '''
 
 import numpy as np, pandas as pd, datetime, netCDF4 as nc4, glob, os, sys
+sys.path.append('/home/dbshin/git/schism-related-script-master/general-scripts')
+from schismpy.mesh.hgrid import Hgrid
 
 def read_time_info(work_dir):
     # Read First schout_1.nc
@@ -42,9 +44,15 @@ def find_outputs_including_target_time(dt,nt,target_time):
 def extract_xyv(work_dir,scho_fname,t_index,target_var,vlayern=-1):
     try : 
         nc4file  = nc4.Dataset("{}/{}".format(work_dir,scho_fname),"r",format="netcdf4")
+        hgridDir  = '{}/../hgrid.ll'.format(work_dir)
+        hgrid_dict = Hgrid.open(hgridDir)
+        x_lon = hgrid_dict['Node'][:,0]
+        y_lat = hgrid_dict['Node'][:,1]
 
-        x_lon = nc4file.variables['SCHISM_hgrid_node_x'][:]
-        y_lat = nc4file.variables['SCHISM_hgrid_node_y'][:]
+        #x_lon = nc4file.variables['SCHISM_hgrid_node_x'][:]
+        #y_lat = nc4file.variables['SCHISM_hgrid_node_y'][:]
+
+
         timetable = nc4file.variables['time'][:]
         var_data = nc4file.variables[target_var][:]
 

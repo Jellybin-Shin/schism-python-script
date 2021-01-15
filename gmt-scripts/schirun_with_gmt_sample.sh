@@ -8,8 +8,10 @@
   #for work_dir in '/home/dbshin/01_WORKS/2020/tongyeong/14_sigma_elevbc_tide_tvd2_sflux_itur_off_itur_3KEKC/' 
   #do
   #done
-scrt_dir='/home/dbshin/01_WORKS/git/schism-related-script'
-work_dir='/home/dbshin/01_WORKS/2020/tongyeong/14_sigma_elevbc_tide_tvd2_sflux_itur_off_itur_3KEKC/'
+scrt_dir='/home/dbshin/git/schism-related-script-master/'
+#work_dir='/home/dbshin/01_WORKS/2020/tongyeong/14_sigma_elevbc_tide_tvd2_sflux_itur_off_itur_3KEKC/'
+work_dir='/home/dbshin/01_workon/01_SCHISM_model/02_Application/01_EastSea/600_alongTopo/621_1year/'
+
 source ~/anaconda3/etc/profile.d/conda.sh
 
 rm -rf $work_dir/gmt_outputs
