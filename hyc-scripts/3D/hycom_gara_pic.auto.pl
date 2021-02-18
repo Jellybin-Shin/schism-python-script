@@ -16,10 +16,8 @@ print("Make sure you have netcdf libraries\n");
 
 #dirs
 #$hycom_dir="/home/Work2/home/dbshin/99_EXT_DATAS/HYCOM_DATA";
-#$hycom_dir="/home/dbshin/01_workon/01_SCHISM_model/02_Application/01_EastSea/401_eastSeaOnly/501_hycom_monthly_data/OUT/monthly/";
+$hycom_dir="/home/dbshin/01_workon/01_SCHISM_model/02_Application/01_EastSea/401_eastSeaOnly/501_hycom_monthly_data/OUT/hycom_tmp_visit/";
 #$hycom_dir="/home1/ext_datas/HYCOM/2017_schism/merge/";
-$hycom_dir="/home/dbshin/roms_his/02.ROMS_to_HYCOM/scripts/";
-
 $thisdir=cwd();
 
 #UTM grid
@@ -33,7 +31,7 @@ system("echo done with gen_gr3.pl");
 
 #generate hotstart.nc and *D.th.nc
 system("./gen_hot_3Dth_from_hycom");
-system("echo done with gen_hot_3Dth_from_hycom");
+
 
 system("cp *D.th.nc ../../../");
 system("cp hotstart.nc ../../../");

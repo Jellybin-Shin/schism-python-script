@@ -1,0 +1,9 @@
+1. copy this folder into project folder
+   (ex) $ cp -a gmt-scripts [project_path]/CASE01
+
+2. in the copied folder, revise some variables in 00.run_gmt.sh
+   (ex) $ vi 00.run_gmt.sh
+
+3. Run 00.run_gmt.sh
+   (ex) $ sh 00.run_gmt.sh
+

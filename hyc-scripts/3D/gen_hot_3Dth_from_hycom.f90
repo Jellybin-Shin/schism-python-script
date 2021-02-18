@@ -18,21 +18,21 @@
 ! Beware the order of vertical levels in the nc file!!!
 ! Assume elev=0 in interpolation of 3D variables
 ! The code will do all it can to extrapolate: below bottom/above surface.
-! If a pt in hgrid.ll is outside the background nc grid, const. values will be filled (from gen_hot_3Dth_from_nc.in) 
+! If a pt in hgrid.ll is outside the background nc grid, const. values will be filled (from gen_hot_3Dth_from_nc.in)
 !
-! Add checking vertical layer for each 3D var from HYCOM nc, and some easy remedy for nc file error  
+! Add checking vertical layer for each 3D var from HYCOM nc, and some easy remedy for nc file error
 ! Wet-dry points are defined by ssh.
 ! For U,V, if nan values in the middle of water, simply fill with 0 and record in fort.20
 ! For S,T, if nan values in the middle of water, simply fill with lowest value, and record in fort.20
 ! If SSH shows wet/dry in time, search nearby points to fill. If none found, fill 0, and record in fort.20
 ! Consider checking HYCOM nc files with ncview or other tools.
 
-!   Input: 
+!   Input:
 !     (1) hgrid.gr3;
 !     (2) hgrid.ll;
 !     (3) vgrid.in (SCHISM R1703 and up);
 !     (4) estuary.gr3 (flags for extrapolating S,T, vel.): depth=0: outside; =1: inside
-!     (5) gen_hot_3Dth_from_nc.in: 
+!     (5) gen_hot_3Dth_from_nc.in:
 !                     1st line: 1: include vel and elev. in hotstart.in (and *[23D].th will start from non-0 values); 0: only T,S
 !                     2nd line: T,S values for estuary points defined in estuary.gr3
 !                     3rd line: T,S values for pts outside bg grid in nc
@@ -73,7 +73,7 @@
 !      integer, parameter :: mnei=20 !neighbor
       integer, parameter :: nbyte=4
       real, parameter :: small1=1.e-2 !used to check area ratios
-  
+
 !     netcdf related variables
       integer :: sid, ncids(100) ! Netcdf file IDs
       integer :: latvid, lonvid, zmvid, hvid ! positional variables
@@ -86,9 +86,9 @@
       integer :: one_dim,ivarid(100),var1d_dims(1),var2d_dims(2),var3d_dims(3), &
      &var4d_dims(4),itime_id(4)
       integer, dimension(nf90_max_var_dims) :: dids
-             
+
 !     Local variables for data
-      real (kind = 4), allocatable :: xind(:), yind(:), lind(:) 
+      real (kind = 4), allocatable :: xind(:), yind(:), lind(:)
 !     Lat, lon, bathymetry
       real (kind = 4), allocatable :: lat(:,:), lon(:,:), hnc(:)
 !     Vertical postion, salinity, and temperature
@@ -166,7 +166,7 @@
       read(17,*)
       do i=1,np
         read(14,*)j,xtmp,ytmp,dp(i)
-        read(16,*)j,xl(i),yl(i) 
+        read(16,*)j,xl(i),yl(i)
         read(17,*)j,xtmp,ytmp,tmp
         iest(i)=nint(tmp)
         if(iest(i)/=0.and.iest(i)/=1) then
@@ -420,7 +420,7 @@
       it0=1
 
 !     Define limits for variables for sanity checks
-      tempmin=-10 
+      tempmin=-10
       tempmax=40
       saltmin=0
       saltmax=45
@@ -435,7 +435,7 @@
 !--------------------------------------------------------------------
       write(char3,'(i20)')ifile
       char3=adjustl(char3); len_char3=len_trim(char3)
-!     Open nc file 
+!     Open nc file
       status = nf90_open('TS_'//char3(1:len_char3)//'.nc', nf90_nowrite, sid)
       call check(status)
       status = nf90_open('SSH_'//char3(1:len_char3)//'.nc', nf90_nowrite, ncids(1))
@@ -480,8 +480,8 @@
 !        allocate(salt0(ixlen,iylen,ilen),stat=ier)
 !        allocate(temp0(ixlen,iylen,ilen),stat=ier)
         uvel=0; vvel=0; ssh=0
-  
-!       get static info (lat/lon grids etc) 
+
+!       get static info (lat/lon grids etc)
         status = nf90_inq_varid(ncids(1), "lon", xvid)
         status = nf90_get_var(ncids(1), xvid, xind)
         status = nf90_inq_varid(ncids(1), "lat", yvid)
@@ -508,6 +508,9 @@
           endif; endif;
         enddo !j
 !        lon=lon-360 !convert to our long.
+
+				print*, lon
+				print*, lat
 
 !       Compute z-coord. (assuming eta=0)
 !       WARNING: In zm(), 1 is bottom; ilen is surface (SCHISM convention)
@@ -540,7 +543,7 @@
         print*, 'Time out (days)=',timeout/86400,it2
 
 !       Read T,S,u,v,SSH
-!       WARNING! Make sure the order of vertical indices is 1 
+!       WARNING! Make sure the order of vertical indices is 1
 !                at bottom, ilen at surface; revert if necessary!
         status = nf90_get_var(sid,svid,salt(:,:,ilen:1:-1),start=(/1,1,1,it2/),count=(/ixlen,iylen,ilen,1/))
         status = nf90_get_var(sid,tvid,temp(:,:,ilen:1:-1),start=(/1,1,1,it2/),count=(/ixlen,iylen,ilen,1/))
@@ -593,7 +596,7 @@
                   endif
                 enddo !k
                 klev0=maxval(klev)
-                
+
 !               if(klev0<=0) then
                 if(minval(klev)<=0) then
                   write(11,*)'Impossible (1):',i,j,klev!salt(i,j,ilen)
@@ -615,7 +618,7 @@
                 do k=klev0,ilen
                   if (temp(i,j,k)<rjunk) then
                     if(k==klev0) then
-                      write(11,*)'Bottom T is junk:',it2,i,j,k,temp(i,j,k) 
+                      write(11,*)'Bottom T is junk:',it2,i,j,k,temp(i,j,k)
                       stop
                     endif
                     write(20,*) 'Warn! Temp Junk in the middle:',it2,i,j,k
@@ -623,7 +626,7 @@
                   end if
                   if (salt(i,j,k)<rjunk) then
                     if(k==klev0) then
-                      write(11,*)'Bottom S is junk:',it2,i,j,k,salt(i,j,k) 
+                      write(11,*)'Bottom S is junk:',it2,i,j,k,salt(i,j,k)
                       stop
                     endif
                     write(20,*) 'Warn! Salt Junk in the middle:',it2,i,j,k
@@ -634,7 +637,7 @@
                 salt(i,j,1:klev0-1)=salt(i,j,klev0)
                 temp(i,j,1:klev0-1)=temp(i,j,klev0)
                 uvel(i,j,1:klev0-1)=uvel(i,j,klev0)
-                vvel(i,j,1:klev0-1)=vvel(i,j,klev0)             
+                vvel(i,j,1:klev0-1)=vvel(i,j,klev0)
                 kbp(i,j)=klev0 !>0; <=ilen
 
                 !Check
@@ -650,18 +653,18 @@
                 enddo !k
               endif !salt
             enddo !j
-          enddo !i  
+          enddo !i
 !          print*, 'ndrypt=',ndrypt
 
 !         Compute S,T etc@ invalid pts based on nearest neighbor
 !         Search around neighborhood of a pt
           allocate(iparen_of_dry(2,max(1,ndrypt)))
           call cpu_time(tt0)
-        
+
           icount=0
           do i=1,ixlen
             do j=1,iylen
-              if(kbp(i,j)==-1) then !invalid pts  
+              if(kbp(i,j)==-1) then !invalid pts
                 icount=icount+1
                 if(icount>ndrypt) stop 'overflow'
                 !Compute max possible tier # for neighborhood
@@ -676,7 +679,7 @@
                       j3=max(1,min(iylen,j+jj))
                       if(kbp(i3,j3)>0) then !found
                         i1=i3; j1=j3
-                        exit loop6   
+                        exit loop6
                       endif
                     enddo !jj
                   enddo !ii
@@ -703,7 +706,7 @@
                 iparen_of_dry(1,icount)=i1
                 iparen_of_dry(2,icount)=j1
 
-                !Check 
+                !Check
                 do k=1,ilen
                   if(salt(i,j,k)<saltmin.or.salt(i,j,k)>saltmax.or. &
                      temp(i,j,k)<tempmin.or.temp(i,j,k)>tempmax.or. &
@@ -726,7 +729,7 @@
 
           !Save for abnormal cases later
 !          salt0=salt
-!          temp0=temp         
+!          temp0=temp
 !          ssh0=ssh
 !          uvel0=uvel
 !          vvel0=vvel
@@ -745,7 +748,7 @@
             enddo !j
           enddo !i
           print*, 'done outputting test outputs for nc'
-     
+
 !         Find parent elements for hgrid.ll
           call cpu_time(tt0)
           loop4: do i=1,np
@@ -784,8 +787,8 @@
               arco(4,i)=(1-xrat)*yrat
               arco(3,i)=xrat*yrat
             else !interp_mode=1; generic search with UG
-              do ix=1,ixlen-1 
-                do iy=1,iylen-1 
+              do ix=1,ixlen-1
+                do iy=1,iylen-1
                   x1=lon(ix,iy); x2=lon(ix+1,iy); x3=lon(ix+1,iy+1); x4=lon(ix,iy+1)
                   y1=lat(ix,iy); y2=lat(ix+1,iy); y3=lat(ix+1,iy+1); y4=lat(ix,iy+1)
                   a1=abs(signa_single(xl(i),x1,x2,yl(i),y1,y2))
@@ -990,7 +993,7 @@
           write(20,*)'done prep for step:',it2
           call flush(20)
         endif !ifile==1.and.it2==
-    
+
 !       Do interpolation: all at 1st  step, bnd only for the rest
         if(ifile==1.and.it2==ilo) then
           iup=np
@@ -1005,7 +1008,7 @@
           else
             i=iond2(ii)
           endif
-        
+
           if(ixy(i,1)==0.or.ixy(i,2)==0) then
             write(20,*)'Cannot find a parent element:',i
             tempout(:,i)=tem_outside
@@ -1038,7 +1041,7 @@
                   stop
                 endif
               endif
-          
+
 !              write(18,*)i,k,ix,iy,lev,vrat,kbp(ix,iy)
               if(lev>=ilen) then
                 write(11,*)'lev:',lev,ix,iy,k,i,ilen,vrat,kbp(ix,iy),z(k,i),zm(ix,iy,1:ilen)
@@ -1131,7 +1134,7 @@
 
           do i=1,ne
             do k=2,nvrt
-              tsel(1,k,i)=(sum(tempout(k,elnode(1:i34(i),i)))+sum(tempout(k-1,elnode(1:i34(i),i))))/2/i34(i) 
+              tsel(1,k,i)=(sum(tempout(k,elnode(1:i34(i),i)))+sum(tempout(k-1,elnode(1:i34(i),i))))/2/i34(i)
               tsel(2,k,i)=(sum(saltout(k,elnode(1:i34(i),i)))+sum(saltout(k-1,elnode(1:i34(i),i))))/2/i34(i)
             enddo !k
             tsel(1,1,i)=tsel(1,2,i) !mainly for hotstart format
@@ -1162,7 +1165,7 @@
             write(23,*)i,tsel(1,1,i)
           enddo !i
 
-!         Output hotstart 
+!         Output hotstart
 !          open(36,file='hotstart.in',form='unformatted',status='replace')
 !          write(36) 0.d0,0,1
 !          do i=1,ne
@@ -1214,7 +1217,7 @@
           iret=nf90_def_var(ncids(4),'dfq1',NF90_DOUBLE,var2d_dims,ivarid(18))
           iret=nf90_def_var(ncids(4),'dfq2',NF90_DOUBLE,var2d_dims,ivarid(19))
           iret=nf90_enddef(ncids(4))
-   
+
           idry_s=0; zeros=0
           iret=nf90_put_var(ncids(4),ivarid(1),dble(0.))
           iret=nf90_put_var(ncids(4),ivarid(2),0)
@@ -1295,17 +1298,17 @@
 !     End of main
 !     Subroutines
       contains
-!     Internal subroutine - checks error status after each netcdf, 
-!     prints out text message each time an error code is returned. 
+!     Internal subroutine - checks error status after each netcdf,
+!     prints out text message each time an error code is returned.
       subroutine check(status)
       integer, intent ( in) :: status
-    
-      if(status /= nf90_noerr) then 
+
+      if(status /= nf90_noerr) then
         print *, trim(nf90_strerror(status))
         print *, 'failed to open nc files'
         stop
       end if
-      end subroutine check  
+      end subroutine check
 
       end program gen_hot
 

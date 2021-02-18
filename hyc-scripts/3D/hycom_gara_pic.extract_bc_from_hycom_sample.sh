@@ -10,8 +10,8 @@
   #done
 scrt_dir='/home/dbshin/git/schism-related-script-master'
 
-#work_dir='/home/dbshin/01_workon/01_SCHISM_model/02_Application/03_JinhaeBay/000.first_grid/021.brclinic_szgrid'
-work_dir='/home/dbshin/01_workon/01_SCHISM_model/02_Application/03_JinhaeBay/900.grid_scale_test/951.30_600m/'
+#work_dir='/home/dbshin/01_workon/01_SCHISM_model/02_Application/01_EastSea/600_alongTopo/628_monthlyERA5_monthlyHYCOM_nudge_island_refine_for_comparing_to_zgrid/'
+work_dir='/home/dbshin/01_workon/01_SCHISM_model/02_Application/01_EastSea/600_alongTopo/999_hycom_intit_visit_tmp'
 
 rm -rf $work_dir/hyc-bc
 mkdir $work_dir/hyc-bc
@@ -24,7 +24,7 @@ cd $work_dir/hyc-bc
 cp -a $scrt_dir/hyc-scripts ./
 cd ./hyc-scripts/3D
 
-perl ./auto.pl	
+perl ./hycom_gara_pic.auto.pl	
 
 cd ../../../
 #rm -rf ./hyc-bc
